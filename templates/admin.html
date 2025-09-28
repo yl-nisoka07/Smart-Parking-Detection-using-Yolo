@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Admin Dashboard</h1>
+</div>
+<p class="lead">Welcome, Administrator! Manage the parking system, users, and view history.</p>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="parking-tab" data-bs-toggle="tab" data-bs-target="#parking" type="button" role="tab"><i class="bi bi-p-square-fill"></i> Parking Management</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab"><i class="bi bi-people-fill"></i> User Management</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab"><i class="bi bi-clock-history"></i> Parking History</button>
+            </li>
+        </ul>
+        
+        <div class="tab-content card" id="adminTabsContent">
+            <div class="tab-pane fade show active p-4" id="parking" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4>Parking Space Management</h4>
+                    <button id="processFrameBtn" class="btn btn-primary"><i class="bi bi-play-fill"></i> Process Next Frame</button>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Space ID</th>
+                                <th>Status</th>
+                                <th>Last Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for space in parking_spaces %}
+                            <tr>
+                                <td><strong>{{ space.space_id }}</strong></td>
+                                <td>
+                                    {% if space.is_occupied %}
+                                        <span class="badge bg-danger">Occupied</span>
+                                    {% else %}
+                                        <span class="badge bg-success">Available</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ space.last_updated.strftime('%Y-%m-%d %H:%M:%S') if space.last_updated else 'N/A' }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-secondary toggle-space" data-space-id="{{ space.space_id }}">
+                                        <i class="bi bi-arrow-repeat"></i> Toggle Status
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade p-4" id="users" role="tabpanel">
+                <h4>User Management</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Admin</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    {% if user.is_admin %}
+                                        <span class="badge bg-success">Yes</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">No</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if not user.is_admin %}
+                                        <button class="btn btn-sm btn-outline-success make-admin" data-user-id="{{ user.id }}">
+                                            <i class="bi bi-person-check-fill"></i> Make Admin
+                                        </button>
+                                    {% endif %}
+                                    <button class="btn btn-sm btn-outline-danger delete-user" data-user-id="{{ user.id }}">
+                                        <i class="bi bi-trash-fill"></i> Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade p-4" id="history" role="tabpanel">
+                <h4>Parking History (Last 50 Events)</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Space ID</th>
+                                <th>Status</th>
+                                <th>Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for event in parking_history %}
+                            <tr>
+                                <td>{{ event.id }}</td>
+                                <td>{{ event.space_id }}</td>
+                                <td>
+                                    {% if event.occupied %}
+                                        <span class="badge bg-danger">Occupied</span>
+                                    {% else %}
+                                        <span class="badge bg-success">Available</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ event.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

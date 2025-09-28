@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Parking Status</h1>
+    <div class="d-flex align-items-center">
+        <span class="badge bg-danger me-2">Occupied</span>
+        <span class="badge bg-light text-dark border me-3">Available</span>
+        <button id="refreshBtn" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-arrow-clockwise"></i> Refresh
+        </button>
+        <div id="loadingSpinner" class="spinner-border spinner-border-sm text-primary ms-2 d-none" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-grid-fill"></i> Parking Lot Overview</h5>
+    </div>
+    <div class="card-body">
+        <div id="parkingSpaces" class="d-flex flex-wrap gap-2 justify-content-center">
+            <!-- Spaces will be populated by JavaScript -->
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-camera-video-fill"></i> Live Parking Lot View</h5>
+            </div>
+            <div class="card-body text-center bg-dark p-2">
+                <img src="{{ url_for('video_feed') }}" class="img-fluid" alt="Live Parking Feed" 
+                     onerror="this.style.display='none'; document.getElementById('videoError').style.display='block'">
+                <div id="videoError" class="text-white" style="display: none;">
+                    <i class="bi bi-camera-video-off fs-1"></i>
+                    <p>Live feed unavailable</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h5><i class="bi bi-car-front"></i> Quick Parking Guide</h5>
+                <div class="d-flex justify-content-around align-items-center">
+                    <div>
+                        <span id="totalAvailable" class="display-6 fw-bold">0</span>
+                        <br><small>Spaces Available</small>
+                    </div>
+                    <div id="quickGuide">
+                        <span id="guideText" class="fw-bold">Looking for best spots...</span>
+                    </div>
+                    <div>
+                        <button onclick="loadQuickGuide()" class="btn btn-light btn-sm">
+                            <i class="bi bi-arrow-repeat"></i> Update
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

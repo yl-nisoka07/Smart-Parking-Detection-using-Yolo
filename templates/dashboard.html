@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard</h1>
+    <button id="refreshBtn" class="btn btn-sm btn-outline-primary">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+    </button>
+</div>
+
+<p class="lead">Welcome, {{ current_user.username }}! Here's a live overview of the parking lot.</p>
+
+<!-- Parking Guidance Card -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-geo-alt-fill"></i> Parking Guidance</h5>
+                <div id="guidanceInfo">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span id="availableCount" class="fw-bold fs-4">{{ parking_spaces|selectattr('is_occupied', 'equalto', false)|list|length }}</span>
+                            <span class="text-muted">spaces available</span>
+                        </div>
+                        <div id="recommendation" class="text-end">
+                            <span class="badge bg-warning text-dark fs-6" id="bestSpotText">Loading recommendations...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card stat-card bg-gradient-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-check-circle-fill"></i> Available Spaces</h5>
+                <p class="card-text display-6" id="availableCountCard">
+                    {{ parking_spaces|selectattr('is_occupied', 'equalto', false)|list|length }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card bg-gradient-danger mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-p-square-fill"></i> Occupied Spaces</h5>
+                <p class="card-text display-6" id="occupiedCount">
+                    {{ parking_spaces|selectattr('is_occupied', 'equalto', true)|list|length }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card bg-gradient-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-grid-3x3-gap-fill"></i> Total Spaces</h5>
+                <p class="card-text display-6" id="totalCount">{{ parking_spaces|length }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card bg-gradient-warning text-dark mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-reception-4"></i> Utilization</h5>
+                <p class="card-text display-6" id="utilizationRate">
+                    {{ "%.1f"|format((parking_spaces|selectattr('is_occupied', 'equalto', true)|list|length / parking_spaces|length * 100) if parking_spaces|length > 0 else 0) }}%
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-camera-video-fill"></i> Live Parking Lot View</h5>
+            </div>
+            <div class="card-body text-center bg-dark">
+                <img src="{{ url_for('video_feed') }}" class="img-fluid" alt="Live Parking Feed">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-list-task"></i> Space Availability</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Space ID</th>
+                                <th>Status</th>
+                                <th>Recommendation</th>
+                            </tr>
+                        </thead>
+                        <tbody id="spacesTable">
+                            {% for space in parking_spaces %}
+                            <tr>
+                                <td><strong>{{ space.space_id }}</strong></td>
+                                <td>
+                                    {% if space.is_occupied %}
+                                        <span class="badge bg-danger">Occupied</span>
+                                    {% else %}
+                                        <span class="badge bg-success">Available</span>
+                                    {% endif %}
+                                </td>
+                                <td id="rec-{{ space.space_id }}">
+                                    {% if not space.is_occupied %}
+                                        <span class="badge bg-light text-dark">-</span>
+                                    {% else %}
+                                        <span class="badge bg-light text-dark">-</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

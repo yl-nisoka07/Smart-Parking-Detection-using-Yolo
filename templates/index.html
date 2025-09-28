@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center p-5 mb-4 bg-light rounded-3">
+    <h1 class="display-4 fw-bold">Smart Parking Detection System</h1>
+    <p class="fs-4">Efficient parking management with AI-powered, real-time vehicle detection.</p>
+    
+    {% if not current_user.is_authenticated %}
+        <div class="mt-4">
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg me-3"><i class="bi bi-rocket-takeoff"></i> Get Started</a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary btn-lg"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+        </div>
+    {% else %}
+        <div class="mt-4">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg"><i class="bi bi-speedometer2"></i> Go to Dashboard</a>
+        </div>
+    {% endif %}
+</div>
+        
+<div class="mt-5">
+    <h2 class="text-center mb-4">How It Works</h2>
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="display-4 text-primary mb-3">
+                        <i class="bi bi-cpu"></i>
+                    </div>
+                    <h5 class="card-title">1. AI Detection</h5>
+                    <p class="card-text">Our system uses advanced computer vision models to accurately detect vehicles in designated parking spaces from a live video feed.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="display-4 text-primary mb-3">
+                        <i class="bi bi-broadcast"></i>
+                    </div>
+                    <h5 class="card-title">2. Real-time Monitoring</h5>
+                    <p class="card-text">The status of each parking space is updated in real-time, providing an accurate, live overview of lot availability on your dashboard.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="display-4 text-primary mb-3">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <h5 class="card-title">3. User Management</h5>
+                    <p class="card-text">A secure system with distinct access levels for administrators and regular users, ensuring smooth and controlled operation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
