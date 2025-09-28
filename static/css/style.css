@@ -1,0 +1,303 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f2f5; /* A softer gray */
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.card {
+    border: none;
+    border-radius: 0.75rem; /* Softer corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #e9ecef;
+    font-weight: 600;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+}
+
+.btn {
+    border-radius: 0.5rem;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* Specific styling for parking space cards */
+.parking-space-card .card-body {
+    padding: 1rem;
+}
+
+.parking-space-card .icon {
+    font-size: 2.5rem; /* Larger icon */
+}
+
+.parking-space-card .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+/* Statistic cards with gradients */
+.stat-card {
+    color: white;
+}
+.bg-gradient-success { background-image: linear-gradient(45deg, #28a745, #218838); }
+.bg-gradient-danger { background-image: linear-gradient(45deg, #dc3545, #c82333); }
+.bg-gradient-info { background-image: linear-gradient(45deg, #17a2b8, #138496); }
+.bg-gradient-warning { background-image: linear-gradient(45deg, #ffc107, #e0a800); }
+
+.stat-card .card-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.stat-card .display-6 {
+    font-size: 2.25rem;
+    font-weight: 700;
+}
+
+/* Form Styling */
+.form-control {
+    border-radius: 0.5rem;
+}
+
+.input-group-text {
+    border-radius: 0.5rem 0 0 0.5rem;
+}
+
+/* Table Styling */
+.table {
+    background-color: #fff;
+    border-radius: 0.75rem;
+    overflow: hidden; /* Ensures border-radius is respected */
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.btn i {
+    margin-right: 5px;
+}
+
+
+/* --- Add these styles for the new parking slots --- */
+
+#parkingSpaces {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Spacing between slots */
+    justify-content: center;
+}
+
+.parking-slot {
+    width: 70px;
+    height: 70px;
+    border: 2px solid #ced4da;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.parking-slot:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.parking-slot .slot-id {
+    font-size: 0.9rem;
+}
+
+.parking-slot .slot-icon {
+    font-size: 1.8rem;
+}
+
+/* Style for Available Slots (like an empty movie seat) */
+.parking-slot.available {
+    background-color: #fff;
+    color: #495057;
+}
+
+.parking-slot.available:hover {
+    border-color: #0d6efd;
+}
+
+/* Style for Occupied Slots (like a taken movie seat) */
+.parking-slot.occupied {
+    background-color: #dc3545; /* Red background */
+    border-color: #c82333;
+    color: #fff; /* White icon and text */
+}
+
+/* Background for login/register pages */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    padding: 20px;
+}
+
+/* Card Styling */
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    background: #fff;
+}
+
+.auth-card .card-header {
+    background: transparent;
+    border-bottom: none;
+    text-align: center;
+    padding-top: 1.5rem;
+}
+
+.auth-card h3 {
+    font-weight: 700;
+    color: #0d6efd;
+}
+
+/* Form inputs */
+.auth-card .form-control {
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s;
+}
+
+.auth-card .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.25);
+}
+
+/* Buttons */
+.auth-card .btn-primary {
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    font-weight: 600;
+    background: linear-gradient(45deg, #0d6efd, #6610f2);
+    border: none;
+    transition: transform 0.2s ease-in-out;
+}
+
+.auth-card .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* Links */
+.auth-card a {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-card a:hover {
+    text-decoration: underline;
+}
+
+
+.parking-guidance {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.recommendation-badge {
+    background: gold;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+/* Highlight best spots in video feed */
+.best-spot {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Add to style.css */
+.parking-slot {
+    width: 70px;
+    height: 70px;
+    border: 2px solid #ced4da;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.parking-slot:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.parking-slot.available {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.parking-slot.occupied {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f1b0b7;
+}
+
+.parking-slot .slot-icon {
+    font-size: 1.5rem;
+}
+
+.parking-slot .slot-id {
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
